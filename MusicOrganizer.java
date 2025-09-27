@@ -12,6 +12,8 @@ public class MusicOrganizer
     private ArrayList<String> files;
     // A player for the music files.
     private MusicPlayer player;
+    
+    private ArrayList<Track> tracks;
         
     /**
      * Create a MusicOrganizer
@@ -20,6 +22,28 @@ public class MusicOrganizer
     {
         files = new ArrayList<>();
         player = new MusicPlayer();
+        tracks = new ArrayList<>();
+        tracks.add(new Track("Burning man.mp3", "ArtistName"));
+        tracks.add(new Track("Livid.mp3", "ArtistName"));
+        tracks.add(new Track("Maverick.mp3", "OtherArtist"));
+    }
+    
+    public class Track {
+        private String filename;
+        private String artist;
+        
+        public Track(String filename, String artist) {
+            this.filename = filename;
+            this.artist = artist;
+        }
+        
+        public String getFilename() {
+            return filename;
+        }
+        
+        public String getArtist() {
+            return artist;
+        }
     }
     
     /**
@@ -51,6 +75,35 @@ public class MusicOrganizer
             System.out.println(filename);
         }
     }
+    
+    public void listWithIndex(ArrayList<String> filesnames) {
+        int position = 0;
+        for (String filename : files) {
+            System.out.println(position + ": "+ filename);
+            position++;
+        }
+    }
+    
+    public void listMatching(String searchString) {
+        boolean found = false;
+        
+        for(String filename: files) {
+            if(filename.contains(searchString)) {
+                // A match.
+                System.out.println(filename);
+                found = true;
+            }
+        }
+    }
+    
+    public void playArtistSamples(String artistName) {
+        for (Track track : tracks) {
+            if (track.getArtist().equalsIgnoreCase(artistName)) {
+                player.playSample(track.getFilename());
+            }
+        }
+    }
+
     
     /**
      * Show a list of all the files in the collection.
